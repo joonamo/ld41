@@ -33,7 +33,6 @@ public class PlayerCharacter : MonoBehaviour {
 		} else {
 			InputV = Vector3.zero;
 		}
-		//gameObject.transform.Translate (InputV * Time.deltaTime * moveSpeed);
 
 		Vector3 AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
 		if (fireCooldown <= 0.0f && AimV.magnitude > 0.5f) {

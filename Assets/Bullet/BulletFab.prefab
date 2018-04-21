@@ -130,7 +130,7 @@ MonoBehaviour:
     m_Bits: 4294967039
   speed: 33
   lifeTime: 2
-  ballImpulse: 30
+  ballImpulse: 15
   inheritedVelocity: {x: 0, y: 0, z: 0}
   bulletDirection: {x: 0, y: 0, z: 0}
 --- !u!136 &136348133108163796
