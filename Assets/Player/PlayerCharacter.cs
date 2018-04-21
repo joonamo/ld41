@@ -28,17 +28,22 @@ public class PlayerCharacter : MonoBehaviour {
 		right.Normalize();
 		Vector3 InputV = Input.GetAxis ("Horizontal") * right + Input.GetAxis ("Vertical") * forward;
 		if (InputV.magnitude > 0.1f) {
-			charController.SimpleMove (InputV * Time.deltaTime * moveSpeed);
+			InputV = InputV * moveSpeed;
+			charController.SimpleMove (InputV * Time.deltaTime);
+		} else {
+			InputV = Vector3.zero;
 		}
 		//gameObject.transform.Translate (InputV * Time.deltaTime * moveSpeed);
 
 		Vector3 AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
 		if (fireCooldown <= 0.0f && AimV.magnitude > 0.5f) {
+			AimV.Normalize ();
 			fireCooldown = fireDelay;
 			GameObject newBullet = Instantiate (bulletClass);
-			newBullet.transform.rotation = Quaternion.LookRotation (AimV);
 			newBullet.transform.position = gameObject.transform.position;
-			newBullet.GetComponent<Bullet> ().inheritedVelocity = charController.velocity;
+			Bullet bulletComp = newBullet.GetComponent<Bullet> ();
+			bulletComp.inheritedVelocity = InputV * 0.01f;
+			bulletComp.bulletDirection = AimV;
 		}
 		if (fireCooldown > 0.0f) {
 			fireCooldown -= Time.deltaTime;

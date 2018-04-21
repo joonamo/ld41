@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+	public LayerMask rayMask = -1;
 	public float speed = 100.0f;
 	private float spawnTime = 0.0f;
 	public float lifeTime = 2.0f;
+	public float ballImpulse = 100.0f;
 	public Vector3 inheritedVelocity = Vector3.zero;
+	public Vector3 bulletDirection = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -16,9 +19,30 @@ public class Bullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		float deltaT = Time.deltaTime;
 		if (Time.timeSinceLevelLoad - spawnTime > lifeTime) {
 			Destroy (gameObject);
 		}
-		gameObject.transform.Translate (new Vector3(0, 0, Time.deltaTime * speed));
+
+		Vector3 translateAmount = speed * bulletDirection * deltaT + inheritedVelocity * deltaT;
+
+		RaycastHit rayHit;
+		if (Physics.Raycast (gameObject.transform.position, translateAmount.normalized, out rayHit, translateAmount.magnitude, rayMask)) {
+			if (rayHit.collider.gameObject.tag == "Football") {
+				GameObject targetObject = rayHit.collider.gameObject;
+				while (targetObject.transform.parent && targetObject.transform.parent.gameObject.tag == "Football") {
+					targetObject = targetObject.transform.parent.gameObject;
+				}
+				Vector3 forceDir = -rayHit.normal;
+				forceDir.y = 0.2f;
+				forceDir.Normalize ();
+				targetObject.GetComponent<Rigidbody> ().AddForce (
+					forceDir * ballImpulse, ForceMode.Impulse);
+			}
+			Destroy (gameObject);
+		}
+
+		gameObject.transform.position += translateAmount;
+		gameObject.transform.rotation = Quaternion.LookRotation (translateAmount);
 	}
 }
