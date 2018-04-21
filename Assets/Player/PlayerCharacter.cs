@@ -9,9 +9,12 @@ public class PlayerCharacter : MonoBehaviour {
 	public float fireDelay = 0.2f;
 
 	private float fireCooldown = 0.0f;
+	private CharacterController charController;
+
+
 	// Use this for initialization
 	void Start () {
-		
+		charController = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
@@ -24,14 +27,18 @@ public class PlayerCharacter : MonoBehaviour {
 		right.y = 0;
 		right.Normalize();
 		Vector3 InputV = Input.GetAxis ("Horizontal") * right + Input.GetAxis ("Vertical") * forward;
-		gameObject.transform.Translate (InputV * Time.deltaTime * moveSpeed);
+		if (InputV.magnitude > 0.1f) {
+			charController.SimpleMove (InputV * Time.deltaTime * moveSpeed);
+		}
+		//gameObject.transform.Translate (InputV * Time.deltaTime * moveSpeed);
 
 		Vector3 AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
-		if (fireCooldown <= 0.0f && AimV.magnitude > 0.0f) {
+		if (fireCooldown <= 0.0f && AimV.magnitude > 0.5f) {
 			fireCooldown = fireDelay;
 			GameObject newBullet = Instantiate (bulletClass);
 			newBullet.transform.rotation = Quaternion.LookRotation (AimV);
 			newBullet.transform.position = gameObject.transform.position;
+			newBullet.GetComponent<Bullet> ().inheritedVelocity = charController.velocity;
 		}
 		if (fireCooldown > 0.0f) {
 			fireCooldown -= Time.deltaTime;

@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour {
 	public float speed = 100.0f;
 	private float spawnTime = 0.0f;
 	public float lifeTime = 2.0f;
-	public float inheritedVelocity = Vector3.zero;
+	public Vector3 inheritedVelocity = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {

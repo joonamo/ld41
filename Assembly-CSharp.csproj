@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bullet\Bullet.cs" />
+     <Compile Include="Assets\Player\CameraScript.cs" />
      <Compile Include="Assets\Player\PlayerCharacter.cs" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
