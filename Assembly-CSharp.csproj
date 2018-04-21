@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\Bullet\Bullet.cs" />
      <Compile Include="Assets\Football\GoalBehaviour.cs" />
+     <Compile Include="Assets\Meta\GameManagerComp.cs" />
      <Compile Include="Assets\Player\CameraScript.cs" />
      <Compile Include="Assets\Player\PlayerCharacter.cs" />
  <Reference Include="UnityEngine.UIAutomation">

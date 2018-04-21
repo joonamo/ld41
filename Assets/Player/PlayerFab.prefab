@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletClass: {fileID: 1810080024927172, guid: 35bb1aeb492de4a90b1aef570c5e08cc,
     type: 2}
-  moveSpeed: 1000
+  moveSpeed: 30
   fireDelay: 0.1
 --- !u!143 &143761672873739622
 CharacterController:

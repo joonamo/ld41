@@ -34,6 +34,19 @@ public class Bullet : MonoBehaviour {
 					targetObject = targetObject.transform.parent.gameObject;
 				}
 				Vector3 forceDir = -rayHit.normal;
+
+				float bestDot = 0.0f;
+				Vector3 bestDir = forceDir;
+				foreach (GameObject goal in GameObject.FindGameObjectsWithTag("Goal")) {
+					Vector3 dir = (goal.transform.position - gameObject.transform.position).normalized;
+					float dot = Vector3.Dot (forceDir, dir);
+					if (dot > bestDot) {
+						bestDot = dot;
+						bestDir = dir;
+					}
+				}
+
+				forceDir = Vector3.Slerp (forceDir, bestDir, (1.0f - bestDot * 0.7f) * 0.7f);
 				forceDir.y = 0.2f;
 				forceDir.Normalize ();
 				targetObject.GetComponent<Rigidbody> ().AddForce (
