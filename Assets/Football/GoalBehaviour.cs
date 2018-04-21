@@ -5,6 +5,7 @@ using UnityEngine;
 public class GoalBehaviour : MonoBehaviour {
 
 	public GameManagerComp GameMan;
+	public bool isEnemyGoal = false;
 
 	private List<GameObject> EnteredThisFrame = new List<GameObject>();
 
@@ -17,7 +18,11 @@ public class GoalBehaviour : MonoBehaviour {
 	{
 		if (!EnteredThisFrame.Contains(other.gameObject) && other.gameObject.tag == "Football") {
 			Destroy (other.gameObject);
-			GameMan.AddScore (1);
+
+			if (isEnemyGoal)
+				GameMan.AddScore (0, 1);
+			else
+				GameMan.AddScore (1, 0);
 			EnteredThisFrame.Add (other.gameObject);
 		}
 	}

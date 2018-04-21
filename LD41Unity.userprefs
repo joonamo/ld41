@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Bullet/Bullet.cs">
+    <Files>
+      <File FileName="Assets/Football/BallBehaviour.cs" Line="16" Column="20" />
+      <File FileName="Assets/Enemy/EnemyBehavior.cs" Line="78" Column="23" />
+      <File FileName="Assets/Bullet/Bullet.cs" Line="50" Column="22" />
+      <File FileName="Assets/Meta/GameManagerComp.cs" Line="46" Column="44" NotebookId="1" />
+      <File FileName="Assets/Football/GoalBehaviour.cs" Line="25" Column="29" NotebookId="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

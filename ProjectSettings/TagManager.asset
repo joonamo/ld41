@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Football
   - GameManager
+  - Goal
+  - Enemy
+  - EnemySpawnPoint
+  - BallSpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -17,8 +21,8 @@ TagManager:
   - 
   - Player
   - FootballExtraRadius
-  - 
-  - 
+  - Enemy
+  - Football
   - 
   - 
   - 

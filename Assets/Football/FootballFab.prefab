@@ -21,10 +21,11 @@ GameObject:
   - component: {fileID: 4474086729944946}
   - component: {fileID: 33220637373716058}
   - component: {fileID: 135299026315995804}
+  - component: {fileID: 114873289275454054}
   - component: {fileID: 23696526701352818}
   - component: {fileID: 54073191886519000}
   - component: {fileID: 135523172369485264}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FootballFab
   m_TagString: Football
   m_Icon: {fileID: 0}
@@ -131,6 +132,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114873289275454054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404619780891908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b45f515cf5ca4e93b3f3b48c4547525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135299026315995804
 SphereCollider:
   m_ObjectHideFlags: 1

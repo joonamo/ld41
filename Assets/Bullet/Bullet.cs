@@ -28,31 +28,41 @@ public class Bullet : MonoBehaviour {
 
 		RaycastHit rayHit;
 		if (Physics.Raycast (gameObject.transform.position, translateAmount.normalized, out rayHit, translateAmount.magnitude, rayMask)) {
-			if (rayHit.collider.gameObject.tag == "Football") {
-				GameObject targetObject = rayHit.collider.gameObject;
-				while (targetObject.transform.parent && targetObject.transform.parent.gameObject.tag == "Football") {
-					targetObject = targetObject.transform.parent.gameObject;
-				}
-				Vector3 forceDir = -rayHit.normal;
-
-				float bestDot = 0.0f;
-				Vector3 bestDir = forceDir;
-				foreach (GameObject goal in GameObject.FindGameObjectsWithTag("Goal")) {
-					Vector3 dir = (goal.transform.position - gameObject.transform.position).normalized;
-					float dot = Vector3.Dot (forceDir, dir);
-					if (dot > bestDot) {
-						bestDot = dot;
-						bestDir = dir;
+			switch (rayHit.collider.gameObject.tag) {
+			case "Football":
+				{
+					GameObject targetObject = rayHit.collider.gameObject;
+					while (targetObject.transform.parent && targetObject.transform.parent.gameObject.tag == "Football") {
+						targetObject = targetObject.transform.parent.gameObject;
 					}
-				}
+					Vector3 forceDir = -rayHit.normal;
 
-				forceDir = Vector3.Slerp (forceDir, bestDir, (1.0f - bestDot * 0.7f) * 0.7f);
-				forceDir.y = 0.2f;
-				forceDir.Normalize ();
-				targetObject.GetComponent<Rigidbody> ().AddForce (
-					forceDir * ballImpulse, ForceMode.Impulse);
+					foreach (GoalBehaviour goal in GameObject.FindObjectsOfType<GoalBehaviour>()) {
+						if (goal.isEnemyGoal)
+							continue;
+						
+						Vector3 dir = (goal.transform.position - targetObject.gameObject.transform.position).normalized;
+						forceDir = Vector3.Slerp (forceDir, dir, 0.7f);
+
+						break;
+					}
+
+					forceDir.y = 0.2f;
+					forceDir.Normalize ();
+					targetObject.GetComponent<Rigidbody> ().AddForce (
+						forceDir * ballImpulse, ForceMode.Impulse);
+					Destroy (gameObject);
+					break;
+				}
+			case "Enemy":
+				{
+					Destroy (rayHit.collider.gameObject);
+					break;
+				}
+			default:
+				Destroy (gameObject);
+				break;
 			}
-			Destroy (gameObject);
 		}
 
 		gameObject.transform.position += translateAmount;
