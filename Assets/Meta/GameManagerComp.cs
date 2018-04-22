@@ -83,6 +83,8 @@ public class GameManagerComp : MonoBehaviour {
 
 			musicPlayer.GetComponent<AudioSource> ().Play ();
 		}
+
+		timeLeft += (amountPlayer - amountEnemy) * 5.0f;
 	}
 
 	// Update is called once per frame

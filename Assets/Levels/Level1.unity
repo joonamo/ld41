@@ -761,11 +761,6 @@ Prefab:
       propertyPath: m_FontData.m_FontStyle
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114471378862688082, guid: edfca4262a907448fa308f184b324407,
-        type: 2}
-      propertyPath: timeLeft
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 114524592960522824, guid: edfca4262a907448fa308f184b324407,
         type: 2}
       propertyPath: m_FontData.m_FontSize
@@ -780,6 +775,11 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114471378862688082, guid: edfca4262a907448fa308f184b324407,
+        type: 2}
+      propertyPath: timeLeft
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: edfca4262a907448fa308f184b324407, type: 2}

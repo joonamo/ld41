@@ -247,7 +247,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -411,7 +411,7 @@ MonoBehaviour:
   spawnKickForce: 10
   enemyRate: 0.2
   enemyClass: {fileID: 1878635871181806, guid: 241499204d31b4a3dbd630f6ad3e74cf, type: 2}
-  timeLeft: 180
+  timeLeft: 60
   timeUpText: {fileID: 0}
   restartText: {fileID: 0}
   winSound: {fileID: 8300000, guid: 9b43c6b97c4bb4d3db473a4e33a9da22, type: 3}
