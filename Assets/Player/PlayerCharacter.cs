@@ -66,6 +66,7 @@ public class PlayerCharacter : MonoBehaviour {
 		} else {
 			AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
 		}
+		AimV += Input.GetAxis ("AimHorizontalKB") * right + Input.GetAxis ("AimVerticalKB") * forward;
 
 		if (Input.GetButton ("Fire1")) {
 			if (groundPlane.Raycast (ray, out enter)) {
