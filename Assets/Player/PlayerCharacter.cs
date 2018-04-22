@@ -85,7 +85,7 @@ public class PlayerCharacter : MonoBehaviour {
 			bulletComp.inheritedVelocity = lastInput * currentSpeed * inheritedSpeedScale;
 			bulletComp.bulletDirection = AimV;
 
-			audioSources [Random.Range (0, audioSources.Length - 1)].Play ();
+			audioSources [Random.Range (0, audioSources.Length)].Play ();
 		}
 		if (fireCooldown > 0.0f) {
 			fireCooldown -= Time.deltaTime;

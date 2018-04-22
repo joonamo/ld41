@@ -150,9 +150,9 @@ public class GameManagerComp : MonoBehaviour {
 
 	GameObject GetSpawnPoint()
 	{
-		GameObject spawnPoint = spawnPoints [Random.Range (0, spawnPoints.Count - 1)];
+		GameObject spawnPoint = spawnPoints [Random.Range (0, spawnPoints.Count)];
 		while ((spawnPoint.transform.position - player.transform.position).magnitude < 15.0f) {
-			spawnPoint = spawnPoints [Random.Range (0, spawnPoints.Count - 1)];
+			spawnPoint = spawnPoints [Random.Range (0, spawnPoints.Count)];
 		}
 		return spawnPoint;
 	}

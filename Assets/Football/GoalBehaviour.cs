@@ -31,7 +31,7 @@ public class GoalBehaviour : MonoBehaviour {
 			EnteredThisFrame.Add (other.gameObject);
 
 			if (sounds.Count > 0) {
-				myAudio.clip = sounds [Random.Range (0, sounds.Count - 1)];
+				myAudio.clip = sounds [Random.Range (0, sounds.Count)];
 			}
 			myAudio.Play ();
 
