@@ -28,10 +28,10 @@ public class Bullet : MonoBehaviour {
 
 		RaycastHit rayHit;
 		if (Physics.Raycast (gameObject.transform.position, translateAmount.normalized, out rayHit, translateAmount.magnitude, rayMask)) {
+			GameObject targetObject = rayHit.collider.gameObject;
 			switch (rayHit.collider.gameObject.tag) {
 			case "Football":
 				{
-					GameObject targetObject = rayHit.collider.gameObject;
 					while (targetObject.transform.parent && targetObject.transform.parent.gameObject.tag == "Football") {
 						targetObject = targetObject.transform.parent.gameObject;
 					}
@@ -47,22 +47,35 @@ public class Bullet : MonoBehaviour {
 						break;
 					}
 
+					AudioSource audio = targetObject.GetComponent<AudioSource> ();
+					if (audio) {
+						audio.pitch = Random.Range (0.9f, 1.1f);
+						audio.Play ();
+					}
+
 					forceDir.y = 0.2f;
 					forceDir.Normalize ();
 					targetObject.GetComponent<Rigidbody> ().AddForce (
 						forceDir * ballImpulse, ForceMode.Impulse);
-					Destroy (gameObject);
+				
 					break;
 				}
 			case "Enemy":
 				{
-					Destroy (rayHit.collider.gameObject);
+					GameObject ower = GameObject.Find ("Ower");
+					ower.transform.position = targetObject.transform.position;
+					AudioSource audio = ower.GetComponent<AudioSource> ();
+					if (audio) {
+						audio.pitch = Random.Range (0.9f, 1.1f);
+						audio.Play ();
+					}
+					Destroy (targetObject);
 					break;
 				}
 			default:
-				Destroy (gameObject);
 				break;
 			}
+			Destroy (gameObject);
 		}
 
 		gameObject.transform.position += translateAmount;

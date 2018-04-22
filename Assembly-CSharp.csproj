@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\Bullet\Bullet.cs" />
      <Compile Include="Assets\Enemy\EnemyBehavior.cs" />
+     <Compile Include="Assets\Enemy\OwerBehaviour.cs" />
      <Compile Include="Assets\Football\BallBehaviour.cs" />
      <Compile Include="Assets\Football\GoalBehaviour.cs" />
      <Compile Include="Assets\Meta\GameManagerComp.cs" />

@@ -6,24 +6,33 @@ public class GoalBehaviour : MonoBehaviour {
 
 	public GameManagerComp GameMan;
 	public bool isEnemyGoal = false;
+	public ParticleSystem particles;
 
 	private List<GameObject> EnteredThisFrame = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
 		GameMan = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerComp> ();
+		particles = GetComponent<ParticleSystem> ();
+		particles.Stop ();
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (!EnteredThisFrame.Contains(other.gameObject) && other.gameObject.tag == "Football") {
-			Destroy (other.gameObject);
 
 			if (isEnemyGoal)
 				GameMan.AddScore (0, 1);
 			else
 				GameMan.AddScore (1, 0);
 			EnteredThisFrame.Add (other.gameObject);
+
+			GetComponent<AudioSource> ().Play ();
+
+//			particles.shape.position = other.transform.position -
+			particles.Play();
+
+			Destroy (other.gameObject);
 		}
 	}
 

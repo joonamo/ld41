@@ -25,6 +25,12 @@ public class GameManagerComp : MonoBehaviour {
 	protected bool timerRunning = false;
 	protected bool gameRunning = true; 
 	protected GameObject player;
+	public UnityEngine.UI.Text timeUpText;
+	public UnityEngine.UI.Text restartText;
+
+	public AudioClip winSound;
+	public AudioClip loseSound;
+	public AudioClip drawSound;
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +43,17 @@ public class GameManagerComp : MonoBehaviour {
 		if (timerGO) {
 			timerText = timerGO.GetComponent<UnityEngine.UI.Text> ();
 			timerText.text = string.Format ("{0:0} : {1:00} : {2:00}", (int)Mathf.Floor (timeLeft / 60.0f), (int)(timeLeft % 60.0f), (int)((timeLeft % 1.0f) * 100.0f));
+		}
+
+		GameObject timeGO = GameObject.Find ("TimeText");
+		if (timeGO) {
+			timeUpText = timeGO.GetComponent<UnityEngine.UI.Text> ();
+			timeUpText.CrossFadeAlpha (0.0f, 0.0f, true);
+		}
+		GameObject restartGO = GameObject.Find ("RestartText");
+		if (restartGO) {
+			restartText = restartGO.GetComponent<UnityEngine.UI.Text> ();
+			restartText.CrossFadeAlpha (0.0f, 0.0f, true);
 		}
 
 		foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag("EnemySpawnPoint")) {
@@ -75,6 +92,23 @@ public class GameManagerComp : MonoBehaviour {
 					}
 					ballTarget = 0;
 					enemyTarget = 0;
+
+					AudioSource audio = GetComponent<AudioSource> ();
+
+					timeUpText.CrossFadeAlpha(1.0f, 0.2f, false);
+					if (score == enemyScore) {
+						timeUpText.text = "Time Up! Draw!";
+						audio.clip = drawSound;
+					} else if (score > enemyScore) {
+						timeUpText.text = "Time Up! You Win!";
+						audio.clip = winSound;
+					} else {
+						timeUpText.text = "Time Up! You Lose!";
+						audio.clip = loseSound;
+					}
+					audio.Play ();
+
+					restartText.CrossFadeAlpha(1.0f, 0.2f, false);
 				}
 				timerText.text = string.Format ("{0:0} : {1:00} : {2:00}", (int)Mathf.Floor (timeLeft / 60.0f), (int)(timeLeft % 60.0f), (int)((timeLeft % 1.0f) * 100.0f));
 			}
@@ -93,6 +127,10 @@ public class GameManagerComp : MonoBehaviour {
 				SpawnPos.y += 1.0f;
 
 				Instantiate (enemyClass, SpawnPos, Quaternion.identity);
+			}
+		} else {
+			if (Input.GetButton("Submit")) {
+				UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
 			}
 		}
 	}

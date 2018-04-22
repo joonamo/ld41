@@ -20,6 +20,7 @@ public class PlayerCharacter : MonoBehaviour {
 	private bool swapRightAxis = false;
 
 	private Plane groundPlane;
+	private AudioSource[] audioSources;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,8 @@ public class PlayerCharacter : MonoBehaviour {
 		swapRightAxis = Application.platform == RuntimePlatform.WebGLPlayer;
 
 		groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+		audioSources = GetComponents<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -80,6 +83,8 @@ public class PlayerCharacter : MonoBehaviour {
 			Bullet bulletComp = newBullet.GetComponent<Bullet> ();
 			bulletComp.inheritedVelocity = lastInput * currentSpeed * inheritedSpeedScale;
 			bulletComp.bulletDirection = AimV;
+
+			audioSources [Random.Range (0, audioSources.Length - 1)].Play ();
 		}
 		if (fireCooldown > 0.0f) {
 			fireCooldown -= Time.deltaTime;

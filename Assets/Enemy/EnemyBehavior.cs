@@ -75,6 +75,12 @@ public class EnemyBehavior : MonoBehaviour {
 				kickVec.Normalize ();
 				targetBall.GetComponent<Rigidbody> ().AddForce (kickVec * ballImpulse, ForceMode.Impulse);
 
+				AudioSource audio = targetBall.GetComponent<AudioSource> ();
+				if (audio) {
+					audio.pitch = Random.Range (0.9f, 1.1f);
+					audio.Play ();
+				}
+
 				kickCooldown = 1.5f;
 			}
 		}
