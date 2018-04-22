@@ -95,7 +95,7 @@ public class EnemyBehavior : MonoBehaviour {
 				continue;
 			}
 			Vector3 v = toOther.normalized * (1.0f - (d / avoidRange)) * avoidMult;
-			Debug.DrawLine(transform.position, transform.position + v * 10.0f);
+//			Debug.DrawLine(transform.position, transform.position + v * 10.0f);
 			avoidVec += v;
 		}
 		avoidVec += ballVec;

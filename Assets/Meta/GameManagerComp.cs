@@ -55,7 +55,11 @@ public class GameManagerComp : MonoBehaviour {
 		ballTarget = (int)Mathf.Sqrt (totalScore * 2);
 		enemyTarget = (int)Mathf.Sqrt (totalScore * 10);
 
-		timerRunning = true;
+		if (!timerRunning) {
+			timerRunning = true;
+			Destroy (GameObject.Find ("ControllerImage"));
+			Destroy (GameObject.Find ("KBImage"));
+		}
 	}
 
 	// Update is called once per frame

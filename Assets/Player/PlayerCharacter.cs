@@ -17,11 +17,16 @@ public class PlayerCharacter : MonoBehaviour {
 	private float fireCooldown = 0.0f;
 	private CharacterController charController;
 	private float currentSpeed = 0.0f;
+	private bool swapRightAxis = false;
 
+	private Plane groundPlane;
 
 	// Use this for initialization
 	void Start () {
 		charController = GetComponent<CharacterController>();
+		swapRightAxis = Application.platform == RuntimePlatform.WebGLPlayer;
+
+		groundPlane = new Plane(Vector3.up, Vector3.zero);
 	}
 	
 	// Update is called once per frame
@@ -49,7 +54,24 @@ public class PlayerCharacter : MonoBehaviour {
 			charController.SimpleMove (lastInput * currentSpeed);
 		}
 
-		Vector3 AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		float enter = 0.0f;
+
+		Vector3 AimV = Vector3.zero;
+		if (swapRightAxis) {
+			AimV = Input.GetAxis ("AimHorizontal") * forward + Input.GetAxis ("AimVertical") * -right;
+		} else {
+			AimV = Input.GetAxis ("AimHorizontal") * right + Input.GetAxis ("AimVertical") * forward;
+		}
+
+		if (Input.GetButton ("Fire1")) {
+			if (groundPlane.Raycast (ray, out enter)) {
+				Vector3 hitPoint = ray.GetPoint (enter);
+				AimV = (hitPoint - transform.position);
+				AimV.y = 0.0f;
+			}
+		}
+		
 		if (fireCooldown <= 0.0f && AimV.magnitude > 0.5f) {
 			AimV.Normalize ();
 			fireCooldown = fireDelay;
