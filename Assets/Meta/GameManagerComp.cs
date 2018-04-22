@@ -16,6 +16,7 @@ public class GameManagerComp : MonoBehaviour {
 
 	public GameObject ballClass;
 	public float spawnKickForce = 20.0f;
+	public float enemyRate = 0.5f;
 
 	public GameObject enemyClass;
 
@@ -25,6 +26,8 @@ public class GameManagerComp : MonoBehaviour {
 	protected bool timerRunning = false;
 	protected bool gameRunning = true; 
 	protected GameObject player;
+	protected GameObject musicPlayer;
+	protected float enemySpawnCooldown = 0.0f;
 	public UnityEngine.UI.Text timeUpText;
 	public UnityEngine.UI.Text restartText;
 
@@ -35,6 +38,7 @@ public class GameManagerComp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+		musicPlayer = GameObject.Find ("MusicPlayer");
 		GameObject scoreGO = GameObject.Find ("ScoreText");
 		if (scoreGO) {
 			scoreText = scoreGO.GetComponent<UnityEngine.UI.Text> ();
@@ -68,14 +72,16 @@ public class GameManagerComp : MonoBehaviour {
 		enemyScore += amountEnemy;
 		scoreText.text = string.Format ("{0} - {1}", score, enemyScore);
 
-		int totalScore = score + enemyScore;
-		ballTarget = (int)Mathf.Sqrt (totalScore * 2);
-		enemyTarget = (int)Mathf.Sqrt (totalScore * 10);
+		ballTarget = (int)Mathf.Sqrt (score * 2);
+		enemyTarget = (int)Mathf.Sqrt (score * 10);
 
 		if (!timerRunning) {
 			timerRunning = true;
 			Destroy (GameObject.Find ("ControllerImage"));
 			Destroy (GameObject.Find ("KBImage"));
+			Destroy (GameObject.Find ("LogoImage"));
+
+			musicPlayer.GetComponent<AudioSource> ().Play ();
 		}
 	}
 
@@ -108,6 +114,8 @@ public class GameManagerComp : MonoBehaviour {
 					}
 					audio.Play ();
 
+					musicPlayer.GetComponent<AudioSource> ().Stop ();
+
 					restartText.CrossFadeAlpha(1.0f, 0.2f, false);
 				}
 				timerText.text = string.Format ("{0:0} : {1:00} : {2:00}", (int)Mathf.Floor (timeLeft / 60.0f), (int)(timeLeft % 60.0f), (int)((timeLeft % 1.0f) * 100.0f));
@@ -121,12 +129,17 @@ public class GameManagerComp : MonoBehaviour {
 				newBall.GetComponent<Rigidbody> ().AddForce (kickTarget * spawnKickForce, ForceMode.Impulse);
 			}
 
-			if (enemies.Count < enemyTarget) {
+			if (enemySpawnCooldown > 0.0f) {
+				enemySpawnCooldown -= Time.deltaTime;
+			}
+
+			if (enemies.Count < enemyTarget && enemySpawnCooldown <= 0.0f) {
 				GameObject spawnPoint = GetSpawnPoint ();
 				Vector3 SpawnPos = spawnPoint.transform.position;
 				SpawnPos.y += 1.0f;
 
 				Instantiate (enemyClass, SpawnPos, Quaternion.identity);
+				enemySpawnCooldown = enemyRate;
 			}
 		} else {
 			if (Input.GetButton("Submit")) {

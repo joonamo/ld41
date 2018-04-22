@@ -7,7 +7,9 @@ public class GoalBehaviour : MonoBehaviour {
 	public GameManagerComp GameMan;
 	public bool isEnemyGoal = false;
 	public ParticleSystem particles;
+	public List<AudioClip> sounds;
 
+	private AudioSource myAudio;
 	private List<GameObject> EnteredThisFrame = new List<GameObject>();
 
 	// Use this for initialization
@@ -15,6 +17,7 @@ public class GoalBehaviour : MonoBehaviour {
 		GameMan = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManagerComp> ();
 		particles = GetComponent<ParticleSystem> ();
 		particles.Stop ();
+		myAudio = GetComponent<AudioSource> ();
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -27,7 +30,10 @@ public class GoalBehaviour : MonoBehaviour {
 				GameMan.AddScore (1, 0);
 			EnteredThisFrame.Add (other.gameObject);
 
-			GetComponent<AudioSource> ().Play ();
+			if (sounds.Count > 0) {
+				myAudio.clip = sounds [Random.Range (0, sounds.Count - 1)];
+			}
+			myAudio.Play ();
 
 //			particles.shape.position = other.transform.position -
 			particles.Play();

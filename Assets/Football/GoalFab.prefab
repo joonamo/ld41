@@ -236,7 +236,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f4a1459b06898429f9f150fa90c3c4d0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.385
+  m_Volume: 0.455
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -319,6 +319,7 @@ MonoBehaviour:
   GameMan: {fileID: 0}
   isEnemyGoal: 1
   particles: {fileID: 0}
+  sounds: []
 --- !u!198 &198296287052912202
 ParticleSystem:
   m_ObjectHideFlags: 1

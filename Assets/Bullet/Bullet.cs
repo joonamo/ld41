@@ -62,6 +62,10 @@ public class Bullet : MonoBehaviour {
 				}
 			case "Enemy":
 				{
+					while (targetObject.transform.parent) {
+						targetObject = targetObject.transform.parent.gameObject;
+					}
+
 					GameObject ower = GameObject.Find ("Ower");
 					ower.transform.position = targetObject.transform.position;
 					AudioSource audio = ower.GetComponent<AudioSource> ();
@@ -69,6 +73,7 @@ public class Bullet : MonoBehaviour {
 						audio.pitch = Random.Range (0.9f, 1.1f);
 						audio.Play ();
 					}
+					ower.GetComponent<ParticleSystem> ().Play ();
 					Destroy (targetObject);
 					break;
 				}
